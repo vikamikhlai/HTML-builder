@@ -11,7 +11,7 @@ function writeInput(input) {
     rl.close();
   } else {
     if (input) data += input  + '\n';
-    fs.writeFileSync(path.join(__dirname, 'text.txt'), data, 'utf-8',
+    fs.writeFile(path.join(__dirname, 'text.txt'), data, 'utf-8',
       (err) => {
         if (err) throw err;
       }
