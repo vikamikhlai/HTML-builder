@@ -5,21 +5,23 @@ const folderProject = path.join(__dirname, 'project-dist');
 let str = '';
 
 fs.readdir(folderStyles, {withFileTypes: true}, (err, files) => {
-    files.forEach(file => {
-        const filePath = folderStyles + '/' + file.name;
-        fs.stat(filePath, (err, stats) => {
-            if(file.isFile() && path.extname(filePath) === '.css') {
-                fs.readFile(filePath, "utf8", function(error, data){
-                    if(error) throw error; 
-                    str += data;
-                    fs.writeFile((folderProject + '/bundle.css'), str, 'utf-8',
-                    (err) => {
-                        if (err) throw err;
-                    });
-                });
-            }
-        })
+  if (err) throw err;
+  files.forEach(file => {
+    const filePath = folderStyles + '/' + file.name;
+    fs.stat(filePath, (err) => {
+      if (err) throw err;
+      if(file.isFile() && path.extname(filePath) === '.css') {
+        fs.readFile(filePath, 'utf8', function(error, data){
+          if(error) throw error; 
+          str += data;
+          fs.writeFile((folderProject + '/bundle.css'), str, 'utf-8',
+            (err) => {
+              if (err) throw err;
+            });
+        });
+      }
     });
+  });
 });
 
 
